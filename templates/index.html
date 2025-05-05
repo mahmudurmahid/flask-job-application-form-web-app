@@ -16,7 +16,7 @@
         <h1 class="mt-4 mb-4">Job Application Form</h1>
       </header>
       <main>
-        <form>
+        <form method="POST">
           <div class="form-group mb-4">
             <label for="first_name">First Name:</label>
             <input
@@ -66,6 +66,7 @@
                 type="radio"
                 id="employed"
                 name="employment_status"
+                value="employed"
                 required
               />
               <label class="btn btn-outline-secondary" for="employed"
@@ -76,6 +77,7 @@
                 type="radio"
                 id="unemployed"
                 name="employment_status"
+                value="unemployed"
                 required
               />
               <label class="btn btn-outline-secondary" for="unemployed"
@@ -86,6 +88,7 @@
                 type="radio"
                 id="self_employed"
                 name="employment_status"
+                value="self_employed"
                 required
               />
               <label class="btn btn-outline-secondary" for="self_employed"
@@ -96,6 +99,7 @@
                 type="radio"
                 id="student"
                 name="employment_status"
+                value="student"
                 required
               />
               <label class="btn btn-outline-secondary" for="student"
@@ -103,7 +107,7 @@
               >
             </div>
           </div>
-          <button class="btn btn-secondary mb-4" type="button">Submit</button>
+          <button class="btn btn-secondary mb-4" type="submit">Submit</button>
         </form>
       </main>
       <footer>
