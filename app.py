@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request
+from flask import Flask, render_template, request, flash
 from flask_sqlalchemy import SQLAlchemy
 from datetime import datetime
 import os
@@ -38,6 +38,7 @@ def index():
         form = Form(first_name=first_name, last_name=last_name, email=email, date=date_obj, employment_status=employment_status)
         db.session.add(form)
         db.session.commit()
+        flash(f"{first_name}, your form has been submitted successfully!", "success")
 
     return render_template("index.html")
 
@@ -45,5 +46,5 @@ def index():
 
 if __name__ == "__main__":
     with app.app_context():
-        db.create_all() # Creates database file in instance folder using Form class above
+        db.create_all() # Creates database file in instance folder using Form class inherited Model above
         app.run(debug=True, port=5000)
