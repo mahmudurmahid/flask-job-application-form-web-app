@@ -17,7 +17,9 @@ app.config["MAIL_PORT"] = os.getenv("MAIL_PORT") # Mail port parameter
 app.config["MAIL_USE_SSL"] = True # Mail use SSL parameter
 app.config["MAIL_USERNAME"] = os.getenv("MAIL_USERNAME") # Mail username parameter
 app.config["MAIL_PASSWORD"] = os.getenv("MAIL_PASSWORD") # Mail password parameter
+
 db = SQLAlchemy(app) # SQLAlchemy instance
+mail = Mail(app) # Flask-Mail instance
 
 # Database model
 class Form(db.Model):
@@ -46,6 +48,25 @@ def index():
         form = Form(first_name=first_name, last_name=last_name, email=email, date=date_obj, employment_status=employment_status)
         db.session.add(form)
         db.session.commit()
+
+        # Send email notification
+        message_body = (f"Thank you for your submission, {first_name} {last_name}.\n\n"
+                        f"Here are the details you provided:\n"
+                        f"First Name: {first_name}\n"
+                        f"Surname: {last_name}\n"
+                        f"Email Address: {email}\n"
+                        f"Start Date: {date_obj}\n"
+                        f"Employment Status: {employment_status}\n\n"
+                        "Thank you for your submission. We will get back to you soon."
+                        )
+        
+        message = Message(subject="Job Application Form Submission", 
+                          sender=app.config["MAIL_USERNAME"], 
+                          recipients=[email],
+                          body=message_body
+                          )
+        mail.send(message)
+
         flash(f"{first_name}, your form has been submitted successfully!", "success")
 
     return render_template("index.html")
