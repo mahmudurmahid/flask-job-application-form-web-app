@@ -1,5 +1,6 @@
 from flask import Flask, render_template, request
 from flask_sqlalchemy import SQLAlchemy
+from datetime import datetime
 import os
 from dotenv import load_dotenv
 
@@ -29,8 +30,14 @@ def index():
         last_name = request.form["last_name"]
         email = request.form["email"]
         date = request.form["date"]
+        date_obj = datetime.strptime(date, "%Y-%m-%d") # Convert date string to date object
         employment_status = request.form["employment_status"]
         print(first_name, last_name, email, date, employment_status)
+
+        # Create a new Form instance and add it to the database
+        form = Form(first_name=first_name, last_name=last_name, email=email, date=date_obj, employment_status=employment_status)
+        db.session.add(form)
+        db.session.commit()
 
     return render_template("index.html")
 
