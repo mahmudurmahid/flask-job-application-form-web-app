@@ -66,7 +66,7 @@ def index():
                           body=message_body
                           )
         mail.send(message)
-
+        # Flash a success message in web application
         flash(f"{first_name}, your form has been submitted successfully!", "success")
 
     return render_template("index.html")
