@@ -1,5 +1,6 @@
 from flask import Flask, render_template, request, flash
 from flask_sqlalchemy import SQLAlchemy
+from flask_mail import Mail, Message
 from datetime import datetime
 import os
 from dotenv import load_dotenv
@@ -10,6 +11,12 @@ app = Flask(__name__) # Flask application instance
 
 app.config["SECRET_KEY"] = os.getenv("SECRET_KEY") # Database secret key parameter
 app.config["SQLALCHEMY_DATABASE_URI"] = os.getenv("DATABASE_URL") # Database URI parameter
+
+app.config["MAIL_SERVER"] = os.getenv("MAIL_SERVER") # Mail server parameter
+app.config["MAIL_PORT"] = os.getenv("MAIL_PORT") # Mail port parameter
+app.config["MAIL_USE_SSL"] = True # Mail use SSL parameter
+app.config["MAIL_USERNAME"] = os.getenv("MAIL_USERNAME") # Mail username parameter
+app.config["MAIL_PASSWORD"] = os.getenv("MAIL_PASSWORD") # Mail password parameter
 db = SQLAlchemy(app) # SQLAlchemy instance
 
 # Database model
@@ -22,6 +29,7 @@ class Form(db.Model):
     employment_status = db.Column(db.String(80))
 
 
+# Routes for web application
 @app.route("/", methods=["GET", "POST"])
 def index():
     print(request.method)
