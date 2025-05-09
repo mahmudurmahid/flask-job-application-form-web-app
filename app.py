@@ -72,7 +72,6 @@ def index():
     return render_template("index.html")
 
 
-
 if __name__ == "__main__":
     with app.app_context():
         db.create_all() # Creates database file in instance folder using Form class inherited Model above
