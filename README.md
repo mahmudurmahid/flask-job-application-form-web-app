@@ -23,6 +23,9 @@ A lightweight and user-friendly web application built with Flask, enabling organ
 - [🛠 Installation & Usage](#-installation--usage)
   - [⚙️ How to Run](#-how-to-run)
   - [🧾 Configuration](#-configuration)
+- [🔒 Security & Environment Configuration](#-security-&environment-configuration)
+  - [🧑‍💻 Use of `python-dotenv`](#-use-of-python-dotenv)
+  - [🔧 Setting Up a Forked Repository](#-setting-up-a-forked-repository)
 - [✅ Testing](#-testing)
   - [🧪 Test Scenarios Checklist](#-test-scenarios-checklist)
   - [🧪 Running Tests](#-running-tests)
@@ -150,6 +153,69 @@ flask run
 Email Settings: Configure SMTP settings in config.py for email functionality.
 
 Database: The application uses SQLite by default; ensure the database file is accessible and has proper permissions.
+
+---
+
+## 🔒 Security & Environment Configuration
+
+### 🧑‍💻 Use of `python-dotenv`
+
+To ensure the security and proper functionality of the web application, sensitive configurations (such as database credentials, email settings, and Flask-specific configurations) are stored in environment variables rather than being hardcoded into the application. This is achieved through the use of the `python-dotenv` library.
+
+- **Why `python-dotenv`?**  
+  `python-dotenv` helps manage environment variables in a `.env` file, which is not committed to version control (e.g., GitHub). This is crucial because it ensures that sensitive information, like API keys and database credentials, are kept private and are not exposed in the source code.
+
+- **Security Benefits**:  
+  By using `python-dotenv` and `.env` files, the app prevents the accidental exposure of sensitive data. This makes it much easier to maintain good security practices when working with production, testing, or staging environments.
+
+- **How It Works**:  
+  The `.env` file is loaded at the start of the application using the `load_dotenv()` function, which makes the variables available throughout the application. These variables are then used in the app's configuration, such as in the `config.py` file for email and database settings, without needing to hardcode values directly into the app.
+
+### 🔧 Setting Up a Forked Repository
+
+If you are forking this repository to work on your own version of the app, there are a few important steps to ensure your instance functions correctly, particularly regarding environment variables.
+
+1. Install `python-dotenv`
+
+Before running the application, you'll need to install the `python-dotenv` library, which helps load environment variables from your `.env` file.
+
+Run the following command:
+
+```bash
+pip install python-dotenv
+```
+
+2. Create the .env File
+   Create a .env file in the root directory of your forked repository (same level as app.py). This file will contain sensitive information that the app needs to run, such as SMTP email credentials, database URI, and Flask environment variables.
+
+Here's an example of what your .env file might look like:
+
+```bash
+FLASK_APP=app.py
+FLASK_ENV=development
+SECRET_KEY=your-secret-key-here
+MAIL_USERNAME=your-email@example.com
+MAIL_PASSWORD=your-email-password
+SQLALCHEMY_DATABASE_URI=sqlite:///app.db
+```
+
+- FLASK_APP: The main entry point for your Flask app.
+- FLASK_ENV: The environment the app is running in (development, production, etc.).
+- SECRET_KEY: A secret key used for sessions and CSRF protection. This should be a random string.
+- MAIL_USERNAME and MAIL_PASSWORD: Your email credentials used for sending notifications (make sure to use environment variables instead of hardcoding these into the app).
+- SQLALCHEMY_DATABASE_URI: The database URI. By default, this points to an SQLite database, but you can change this to another database provider like PostgreSQL or MySQL if necessary.
+
+3. Add Your Own Credentials
+   After setting up the .env file, make sure to replace placeholders (like your-secret-key-here and your-email@example.com) with your actual credentials. These values are critical for the proper functioning of the app, particularly the email notifications and database.
+
+4. Run the Application
+   Once your .env file is set up with the appropriate variables, you can run the application using:
+
+```bash
+flask run
+```
+
+This will start the server, and you can access the app at http://localhost:5000 in your browser.
 
 ---
 
