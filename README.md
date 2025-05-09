@@ -204,7 +204,6 @@ This will run all the test cases in the project, and you will receive a summary 
 This project is developed and maintained by Mahmud Urmahid.
 
 - **GitHub**: [@mahmudurmahid](https://github.com/mahmudurmahid)
-- **Email**: [mahmudurmahid@gmail.com](mailto:mahmudurmahid@gmail.com)
 
 #### 🧰 Tools & Technologies
 
